@@ -3,14 +3,12 @@ import Header from '../components/header';
 import { withRouter, Link } from "react-router-dom";
 import { connect } from "unistore/react";
 import { actions, store } from "../store/store";
-import logo from '../images/logo.svg'
 import axios from "axios"
 
 class Keranjang extends React.Component {
 
     componentDidMount = async () => {
-        console.warn("ready to axios")
-        const self = this
+
         let keranjang = {
             method:"get",
             url: "http://0.0.0.0:5000/keranjang",
@@ -23,8 +21,6 @@ class Keranjang extends React.Component {
         await axios(keranjang)
             .then((response) => {
                 store.setState({keranjang : response.data, keranjangData : response.data.produk})
-                console.warn('isi keranjang', response.data)
-                console.warn('isi keranjang', response.data)
             })
             .catch(function(error) {
                 console.log(error)
@@ -38,7 +34,6 @@ class Keranjang extends React.Component {
         let keranjangProduk;
         if(this.props.keranjangData!==undefined) {
             keranjangDetail = this.props.keranjangData
-            console.warn('keranjang data', keranjangDetail)
 
             keranjangProduk = keranjangDetail.map((value) => {
                 return (
@@ -54,7 +49,6 @@ class Keranjang extends React.Component {
                             <td className="price-col">Rp. {value.produk.harga}</td>
                             <td className="quy-col">
                                 <div className="quy-input">
-                                    {/* <span>Qty</span> */}
                                     {value.produk.kuantitas}
                                     <input type="number" min="01" style={{width:'50px'}} placeholder={value.kuantitas}/>
                                 </div>
@@ -90,7 +84,6 @@ class Keranjang extends React.Component {
                                 <h1>Rp. {this.props.keranjang.total_harga}</h1>
                             </div>
                             <div className="col-lg-4 col-md-4 text-lg-right text-left">
-                                {/* <div className="site-btn btn-clear text-center">Hapus Keranjang</div> */}
                             </div>
                             <div className="col-lg-4 col-md-4 text-lg-center text-center site-btn btn-continue">
                                 <Link onClick={() => this.props.history.push('/checkout')} className="text-center" href="checkout.html">Checkout</Link>
@@ -100,14 +93,8 @@ class Keranjang extends React.Component {
                 </div>
                 <div className="col-lg-8 pl-5">
                     <div className="cart-total-details">
-                        {/* <h4>Total Keranjang</h4>
-                        <ul className="cart-total-card">
-                            <li>Subtotal<span>Rp. {this.props.keranjangData.harga}</span></li>
-                            <li className="total">Total<span>Rp. {this.props.keranjang.total_harga}</span></li>
-                        </ul> */}
                     </div>
                 </div>
-                {/* </div> */}
             </React.Fragment>
 
         )

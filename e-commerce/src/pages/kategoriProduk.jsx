@@ -2,7 +2,7 @@ import React from 'react';
 import Header from '../components/header';
 import Filter from '../components/filterProduk';
 import Produk from '../components/produk';
-import { withRouter, Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import { connect } from "unistore/react";
 import { actions, store } from "../store/store";
 import axios from "axios"
@@ -18,15 +18,15 @@ class KategoriProduk extends React.Component {
     }
 
     componentWillUpdate = async () =>{
-        const self = this
-        const kategori = await self.props.match.params.kategori
-        if(self.props.kategori!==kategori){
-            await self.hitCategory();
+        // const self = this
+        const kategori = await this.props.match.params.kategori
+        if(this.props.kategori!==kategori){
+            await this.hitCategory();
         }
     }
 
     hitCategory = async () => {
-        const self = this
+        // const self = this
         let produk = {
             method:"get",
             url: "http://0.0.0.0:5000/produk",
@@ -36,16 +36,14 @@ class KategoriProduk extends React.Component {
         };
 
         await axios(produk)
-            .then(function(response){
+            .then((response) => {
                 const produks = response.data.filter(item => {
-                    if (item.kategori === self.props.kategori) {
+                    if (item.kategori === this.props.kategori) {
                         return item;
                     }
                     return false;
                     })
-
                 store.setState({ produkList : produks})
-                console.log('response data', response.data);
             })
             .catch((error) => {
                 alert("error");
@@ -58,7 +56,6 @@ class KategoriProduk extends React.Component {
         let itemProduk;
         if(this.props.produkList!==undefined && this.props.produkList!==null) {
             const listProduk = this.props.produkList
-            console.log('ini list produk', listProduk);
             itemProduk = listProduk.map((item, key) => {
                 return (
                     <Produk 

@@ -1,6 +1,4 @@
 import React from 'react';
-import logo from '../images/logo.svg'
-import search from '../images/search.png'
 import profile from '../images/profile.svg'
 import { Link, withRouter } from 'react-router-dom';
 

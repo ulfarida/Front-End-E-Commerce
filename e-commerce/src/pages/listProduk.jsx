@@ -2,7 +2,7 @@ import React from 'react';
 import Header from '../components/header';
 import Filter from '../components/filterProduk';
 import Produk from '../components/produk';
-import { withRouter, Link } from "react-router-dom";
+import { withRouter  } from "react-router-dom";
 import { connect } from "unistore/react";
 import { actions, store } from "../store/store";
 import axios from "axios"
@@ -10,7 +10,6 @@ import axios from "axios"
 class ListProduk extends React.Component {
 
     componentDidMount = async () => { 
-        const self = this
 
         let produk = {
             method:"get",
@@ -20,7 +19,7 @@ class ListProduk extends React.Component {
             }
         };
 
-        await axios(produk)
+        const result = await axios(produk)
             .then(function(response){
                 store.setState({ produkList : response.data})
             })
@@ -28,13 +27,14 @@ class ListProduk extends React.Component {
                 console.log(error);
                 alert("error");
             });
+        console.warn('axios', result);
+        
     }
 
 
     render () {
 
         const listProduk = this.props.produkList
-        console.warn('ini list produk', listProduk)
         const itemProduk = listProduk.map((item, key) => {
             return (
                 <Produk 

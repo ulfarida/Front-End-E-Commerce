@@ -3,7 +3,7 @@ import React from 'react';
 import Header from '../components/header';
 import { withRouter, Link } from "react-router-dom";
 import { connect } from "unistore/react";
-import { actions, store } from "../store/store";
+import { actions } from "../store/store";
 import axios from "axios"
 
 class UbahProfil extends React.Component {
@@ -31,7 +31,6 @@ class UbahProfil extends React.Component {
 
         await axios(profil)
             .then(function(response){
-                console.log(response.data);
                 self.props.history.push("/profil");
             })
             .catch(function(error){
@@ -91,8 +90,7 @@ class UbahProfil extends React.Component {
                     </div>
                 </div>
             </React.Fragment>
-
         )
     }
-    }
+}
 export default connect('nama, alamat, telepon, tanggalLahir, fotoProfil', actions)(withRouter(UbahProfil))

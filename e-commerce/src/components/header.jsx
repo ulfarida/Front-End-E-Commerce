@@ -9,18 +9,24 @@ import { Link, withRouter } from 'react-router-dom';
 
 class Header extends React.Component{
 
+    afterLogOut = async () => {
+        localStorage.removeItem("token")
+        localStorage.setItem("auth", "false")
+        await this.props.history.push('/')
+    }
+
     render(){
 
         const isLogin = localStorage.getItem("auth")
-        console.warn('ini islogin', isLogin)
-
+        const isadmin = localStorage.getItem("isadmin")
+      
         return(
             <React.Fragment>
-                <nav className="navbar navbar-expand-md navbar-light" style={{backgroundColor:'#f0134d', heigh:'200px'}}>
+                <nav className="navbar navbar-expand-md navbar-light" style={{backgroundColor:'#f0134d', height:'100px'}}>
                 <div className="container">
-                    <img src={logo} alt="" style={{height:'65px'}}/>
+                    
                     <div className="navbar-nav">
-                        <Link to='/' className="nav-item nav-link active babybun" style={{color:'black', fontSize:'25px', color:'white'}}>BABYBUN</Link>
+                        <Link to='/' className="nav-item nav-link active babybun" style={{color:'black', fontSize:'25px', color:'white'}}><img src={logo} alt="" style={{height:'65px'}}/>BABYBUN</Link>
                     </div>
                     <button type="button" className="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
                         <span className="navbar-toggler-icon"></span>
@@ -51,10 +57,19 @@ class Header extends React.Component{
                             </form>
                         </div>
                         { isLogin == "true" ?
+                        isadmin == "true" ?
+                        <div>
+                            <Link to='/tambah-produk' className="pr-5">
+                                Tambah Produk
+                            </Link>
+                            <Link onClick={()=>this.afterLogOut()} className="">
+                                Log Out
+                            </Link>
+                        </div>
+                        :
                         <div className="navbar-nav">
                             <Link to='/keranjang'><img src={cart} alt="" style={{height:'40px'}} className='mr-5'/></Link>
                             <Link to='profil'><img src={profile} alt="" style={{height:'40px'}}/></Link>
-                            {/* <a href="#" className="nav-item nav-link">Log Out</a> */}
                         </div>
                         :
                         <div className="navbar-nav">

@@ -1,16 +1,15 @@
 
 import React from 'react'; 
 import Header from '../components/header';
-import { withRouter, Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import { connect } from "unistore/react";
-import { actions, store } from "../store/store";
+import { actions } from "../store/store";
 import axios from "axios"
 import '../style/form.css'
 
 class TambahProduk extends React.Component {
 
     addProduct = async (e) => {
-        console.warn("harga", this.props.harga)
         const self = this
         const input = {
             nama_produk : this.props.namaProduk,
@@ -34,7 +33,6 @@ class TambahProduk extends React.Component {
 
         await axios(profil)
             .then(function(response){
-                console.log(response.data);
                 alert("Produk berhasil ditambahkan")
                 self.props.history.push("/tambah-produk");
             })

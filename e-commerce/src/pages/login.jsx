@@ -9,7 +9,6 @@ import axios from "axios"
 class Login extends React.Component {
 
     afterSignin = async () => {
-        console.warn("ready to axios")
         const self = this
         const input = {
             username : this.props.username,
@@ -27,10 +26,9 @@ class Login extends React.Component {
 
         await axios(signIn)
             .then(function(response) {
-                console.warn('respon data')
                 if(response.data.hasOwnProperty("token")) {
-                    console.warn('token', response.data.token)
                     localStorage.setItem("token", response.data.token)
+                    localStorage.setItem("isadmin", response.data.isadmin)
                     localStorage.setItem("auth", "true")
                     store.setState({auth : true})
                     self.props.history.push("/")
@@ -71,10 +69,8 @@ class Login extends React.Component {
                                                 </div>
                                                 <input type="password" className="form-control" placeholder="password" id="password"  name="password" onChange= {e => this.props.setInput(e)} required/>
                                             </div>
-                                            {/* <div className="form-group"> */}
                                                 <button type="submit" value="Login" className="btn float-right login_btn" onClick={()=> this.afterSignin()}>Log In
                                                 </button>
-                                            {/* </div> */}
                                         </form>
                                     </div>
                                     <div className="card-footer">
@@ -91,8 +87,7 @@ class Login extends React.Component {
                     </div>
                 </div>
             </React.Fragment>
-
         )
     }
-    }
+}
 export default connect('username, password, apiUrl, auth', actions)(withRouter(Login))

@@ -2,7 +2,7 @@ import React from 'react';
 import Header from '../components/header';
 import ProfilList from '../components/profilList';
 import ProfilInfo from '../components/profilInfo';
-import { withRouter, Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import { connect } from "unistore/react";
 import { actions, store } from "../store/store";
 import axios from "axios"
@@ -11,7 +11,6 @@ import axios from "axios"
 class Profil extends React.Component {
 
     componentDidMount = async () => { 
-        const self = this
 
         let profil = {
             method:"get",

@@ -1,8 +1,6 @@
 import React from 'react';
-import logo from '../images/logo.svg'
-import search from '../images/search.png'
-import profile from '../images/profile.svg'
 import { Link, withRouter } from 'react-router-dom';
+import { store } from "../store/store";
 
 class Filter extends React.Component{
 
@@ -19,9 +17,12 @@ class Filter extends React.Component{
                     <div className="nav-item dropdown mb-2  text-center">
                         <a href="#" className="btn btn-info dropdown-toggle" data-toggle="dropdown">Kategori&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</a>
                         <div className="dropdown-menu">
-                            <a href="#" className="dropdown-item">Inbox</a>
-                            <a href="#" className="dropdown-item">Sent</a>
-                            <a href="#" className="dropdown-item">Drafts</a>
+                            <Link to='/makanan-susu' onClick={() => store.setState({kategori : 'Makanan dan Susu'})} className="dropdown-item">Makanan dan Susu</Link>
+                            <Link to='/alat-makan' onClick={() => store.setState({kategori : 'Alat Makan'})} className="dropdown-item">Alat makan</Link>
+                            <Link to='/perlengkapan-mandi' onClick={() => store.setState({kategori : 'Perlengkapan Mandi'})} className="dropdown-item">Perlengkapan Mandi</Link>
+                            <Link to='/mainan' onClick={() => store.setState({kategori : 'Mainan'})} className="dropdown-item">Mainan</Link>
+                            <Link to='/pakaian' onClick={() => store.setState({kategori : 'Pakaian'})} className="dropdown-item">Pakaian</Link>
+                            <Link to='/popok' onClick={() => store.setState({kategori : 'Popok'})} className="dropdown-item">Popok</Link>
                         </div>
                         </div>
                     </div>
@@ -31,9 +32,11 @@ class Filter extends React.Component{
                     <div className="nav-item dropdown mb-2  text-center">
                         <a href="#" className="btn btn-info dropdown-toggle" data-toggle="dropdown">Harga&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&nbsp;</a>
                         <div className="dropdown-menu">
-                            <a href="#" className="dropdown-item">Inbox</a>
-                            <a href="#" className="dropdown-item">Sent</a>
-                            <a href="#" className="dropdown-item">Drafts</a>
+                            <a href="#" className="dropdown-item">Dibawah Rp 100.000</a>
+                            <a href="#" className="dropdown-item">Rp 100.000-Rp 200.000</a>
+                            <a href="#" className="dropdown-item">Rp 200.000-Rp 300.000</a>
+                            <a href="#" className="dropdown-item">Rp 300.000-Rp 500.000</a>
+                            <a href="#" className="dropdown-item">Diatas Rp 500.000</a>
                         </div>
                         </div>
                     </div>
@@ -43,9 +46,9 @@ class Filter extends React.Component{
                     <div className="nav-item dropdown mb-2  text-center">
                         <a href="#" className="btn btn-info dropdown-toggle" data-toggle="dropdown">Lokasi&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</a>
                         <div className="dropdown-menu">
-                            <a href="#" className="dropdown-item">Inbox</a>
-                            <a href="#" className="dropdown-item">Sent</a>
-                            <a href="#" className="dropdown-item">Drafts</a>
+                            <a href="#" className="dropdown-item">Jakarta</a>
+                            <a href="#" className="dropdown-item">Malang</a>
+                            <a href="#" className="dropdown-item">Surabaya</a>
                         </div>
                         </div>
                     </div>
@@ -55,9 +58,9 @@ class Filter extends React.Component{
                     <div className="nav-item dropdown mb-2 text-center">
                         <a href="#" className="btn btn-info dropdown-toggle" data-toggle="dropdown">Rating&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</a>
                         <div className="dropdown-menu">
-                            <a href="#" className="dropdown-item">Inbox</a>
-                            <a href="#" className="dropdown-item">Sent</a>
-                            <a href="#" className="dropdown-item">Drafts</a>
+                            <a href="#" className="dropdown-item">3++</a>
+                            <a href="#" className="dropdown-item">4++</a>
+                            <a href="#" className="dropdown-item">5</a>
                         </div>
                         </div>
                     </div>

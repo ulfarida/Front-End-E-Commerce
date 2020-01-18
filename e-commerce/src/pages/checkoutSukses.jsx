@@ -1,16 +1,13 @@
 import React from 'react'; 
 import Header from '../components/header';
 import check from '../images/check.svg'
-import Filter from '../components/filterProduk';
-import Produk from '../components/produk';
-import { withRouter, Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import { connect } from "unistore/react";
-import { actions, store } from "../store/store";
+import { actions } from "../store/store";
 
 class CheckoutSukses extends React.Component {
 
     render () {
-
         return (
             <React.Fragment>
                 <Header/>
@@ -30,7 +27,7 @@ class CheckoutSukses extends React.Component {
                                <div className="pl-5 pr-5 mt-2 mb-5 text-center">
                                    <div>
                                         <h5>Selesaikan pembayaran anda dalam waktu 24 jam</h5><br/>
-                                        <h3>Rp. 500.000</h3>
+                                        <h3>Rp.{this.props.keranjang.total_harga}</h3>
                                    </div>
                                        <h6>Transfer pembayaran anda ke</h6>
                                    <div className="border py-3 pl-3 mb-3" style={{backgroundColor : '#ff6f5e'}}>
@@ -44,8 +41,7 @@ class CheckoutSukses extends React.Component {
                    </div>
                 </div>
             </React.Fragment>
-
         )
     }
 }
-export default connect('', actions)(withRouter(CheckoutSukses));
+export default connect('keranjang', actions)(withRouter(CheckoutSukses));

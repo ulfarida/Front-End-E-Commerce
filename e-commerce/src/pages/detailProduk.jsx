@@ -1,9 +1,6 @@
 import React from 'react'; 
 import Header from '../components/header';
-import Filter from '../components/filterProduk';
-import Produk from '../components/produk';
 import { withRouter, Link } from "react-router-dom";
-import logo from '../images/logo.svg'
 import { connect } from "unistore/react";
 import { actions, store } from "../store/store";
 import axios from "axios"
@@ -15,11 +12,10 @@ class DetailProduk extends React.Component {
         const index = await self.props.match.params.index;
         const listProduk = await self.props.produkList;
         const currentProduk = await listProduk[index];
-        console.warn('curren product', currentProduk)
+
         if(currentProduk==null){
             this.props.history.replace('/not_match')
         }
-        // await this.props.setChange('produkData', currentProduk)
         await store.setState({produkData:currentProduk})
     }
 

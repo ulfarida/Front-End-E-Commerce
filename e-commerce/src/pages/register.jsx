@@ -1,15 +1,14 @@
 
 import React from 'react'; 
 import Header from '../components/header';
-import { withRouter, Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import { connect } from "unistore/react";
-import { actions, store } from "../store/store";
+import { actions } from "../store/store";
 import axios from "axios"
 
 class Register extends React.Component {
 
     afterRegister = async (e) => {
-        console.warn("ready to axios")
         const self = this
         const input = {
             username : this.props.username,
@@ -29,7 +28,6 @@ class Register extends React.Component {
 
         await axios(register)
             .then(function(response){
-                console.log(response.data);
                 self.props.history.push("/login");
                 alert("Registrasi Berhasil. Silakan Login")
             })
@@ -89,8 +87,7 @@ class Register extends React.Component {
                     </div>
                 </div>
             </React.Fragment>
-
         )
     }
-    }
+}
 export default connect('username, email, password, confirm_password, apiUrl, auth', actions)(withRouter(Register))

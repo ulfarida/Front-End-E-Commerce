@@ -1,9 +1,7 @@
 import React from 'react';
-import milk from '../images/milk.svg'
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from "unistore/react";
 import { actions, store } from "../store/store";
-import best from '../images/best.svg'
 
 class Kategori extends React.Component{
 

@@ -1,15 +1,46 @@
 import React from 'react'; 
 import Header from '../components/header';
 import ProfilList from '../components/profilList';
-import ProfilInfo from '../components/profilInfo';
-import { withRouter, Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import { connect } from "unistore/react";
-import { actions } from "../store/store";
 import RiwayatPesanan from '../components/riwayatPesanan';
+import { actions } from "../store/store";
+import axios from "axios"
 
 class Riwayat extends React.Component {
 
+    state = {
+        transaksiList : []
+    }
+
+    componentDidMount = async () => {
+        let transaksi = {
+            method:"get",
+            url: "http://0.0.0.0:5000/transaksi",
+            headers: {
+                "Content-Type": "application/json",
+                'Authorization':'Bearer ' + localStorage.getItem("token")
+            }
+        };
+
+        await axios(transaksi)
+            .then((response) => {
+                this.setState({transaksiList : response.data})
+            })
+            .catch(function(error) {
+                console.log(error)
+            })
+    }
+
     render () {
+        const transaksiData = this.state.transaksiList
+        const transaksiDetail = transaksiData.map((item) => {
+            return (
+                <RiwayatPesanan value={item}
+                    {...this.props}
+                    />
+            );
+        });
     
         return (
             <React.Fragment>
@@ -20,7 +51,7 @@ class Riwayat extends React.Component {
                             <ProfilList />
                         </div>
                         <div className="col-md-8 col-lg-8 col-sm-12 col-12">
-                            <RiwayatPesanan />
+                            {transaksiDetail}
                         </div>
                     </div>
                 </div>
@@ -30,4 +61,4 @@ class Riwayat extends React.Component {
         )
     }
 }
-export default withRouter(Riwayat);
+export default connect('', actions)(withRouter(Riwayat));

@@ -1,15 +1,14 @@
 
 import React from 'react'; 
 import Header from '../components/header';
-import { withRouter, Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import { connect } from "unistore/react";
-import { actions, store } from "../store/store";
+import { actions } from "../store/store";
 import axios from "axios"
 
 class UbahPassword extends React.Component {
 
     changePassword = async (e) => {
-        console.warn("ready to axios")
         const self = this
         const input = {
             password_lama : this.props.password_lama,
@@ -29,14 +28,12 @@ class UbahPassword extends React.Component {
 
         await axios(ubahPassword)
             .then(function(response){
-                console.warn('props', self.props)
-                // console.log(response.data);
                 self.props.history.push("/login");
                 alert(response.data.message)
             })
-            .catch(function(response){
-                // console.log(error);
-                alert(response.message);
+            .catch(function(error){
+                console.log(error);
+                alert(error);
             });
     }
 

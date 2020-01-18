@@ -5,12 +5,10 @@ import './style/bootstrap.min.css';
 import './style/main.css';
 import './style/category.css';
 import './style/color.css';
-import MainRoutes from './routes/mainRoutes'
+import MainRoutes from './routes/mainRoutes';
 
 function App() {
-  return (
-    < MainRoutes />
-  );
+  return <MainRoutes />;
 }
 
 export default App;

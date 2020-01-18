@@ -4,7 +4,6 @@ import { withRouter, Link } from "react-router-dom";
 import { connect } from "unistore/react";
 import { actions } from "../store/store";
 import axios from 'axios'
-import logo from '../images/logo.svg'
 
 class Checkout extends React.Component {
 
@@ -43,9 +42,9 @@ class Checkout extends React.Component {
         await axios(checkout)
             .then((response) => {
                 this.props.history.push('/checkout-berhasil')
-                console.warn('info checkout', response.data)
             })
             .catch(function(error) {
+                alert("error")
                 console.log(error)
             })
     }
@@ -55,8 +54,6 @@ class Checkout extends React.Component {
         let checkoutProduk;
         if(this.props.keranjangData!==undefined) {
             checkoutDetail = this.props.keranjangData
-            console.warn('nama penerima', this.props.nama)
-
             checkoutProduk = checkoutDetail.map((value) => {
                 return (
                     <tr>

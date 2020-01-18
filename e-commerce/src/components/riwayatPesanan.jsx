@@ -1,106 +1,27 @@
 import React from 'react'; 
-import Header from './header';
-import { withRouter, Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import { connect } from "unistore/react";
-import { actions, store } from "../store/store";
-import logo from '../images/logo.svg'
-import axios from "axios"
-
+import { actions } from "../store/store";
 class RiwayatPesanan extends React.Component {
-
-    componentDidMount = async () => {
-        console.warn("ready to axios")
-        const self = this
-        let keranjang = {
-            method:"get",
-            url: "http://0.0.0.0:5000/keranjang",
-            headers: {
-                "Content-Type": "application/json",
-                'Authorization':'Bearer ' + localStorage.getItem("token")
-            }
-        };
-
-        await axios(keranjang)
-            .then((response) => {
-                store.setState({keranjang : response.data, keranjangData : response.data.produk})
-                console.warn('isi keranjang', response.data)
-                console.warn('isi keranjang', response.data)
-            })
-            .catch(function(error) {
-                console.log(error)
-            })
-    }
-
 
     render () {
 
-        let keranjangDetail;
-        let keranjangProduk;
-        if(this.props.keranjangData!==undefined) {
-            keranjangDetail = this.props.keranjangData
-            console.warn('keranjang data', keranjangDetail)
-
-            keranjangProduk = keranjangDetail.map((value) => {
-                return (
-                    <tbody>
-                        <tr>
-                            <td className="product-col">
-                                <img src={value.produk.foto_produk} alt=""/>
-                                <div className="pc-title">
-                                    <h4>{value.produk.nama_produk}</h4>
-                                </div>
-                            </td>
-                            <td className="total-col">Rp. {value.harga}</td>
-                        </tr>
-                    </tbody>
-                )
-            })
-        }
-
         return (
             <React.Fragment>
-                <div className="page-area cart-page spad mt-5">
-                    <div className="container">
-                        <div className="cart-table">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th className="product-th text-center">Produk</th>
-                                        <th className="total-th">Total Harga</th>
-                                    </tr>
-                                </thead>
-                                {keranjangProduk}
-                            </table>
-                        </div>
-                        <div className="row cart-buttons align-items-center">
-                            <div className="col-lg-4 col-md-4">
-                                <h5>Total harga :</h5>
-                                <h1>Rp. {this.props.keranjang.total_harga}</h1>
-                            </div>
-                            <div className="col-lg-4 col-md-4 text-lg-right text-left">
-                                {/* <div className="site-btn btn-clear text-center">Hapus Keranjang</div> */}
-                            </div>
-                            <div className="col-lg-4 col-md-4 text-lg-center text-center site-btn btn-continue">
-                                <Link onClick={() => this.props.history.push('/checkout')} className="text-center" href="checkout.html">Checkout</Link>
-                            </div>
-                        </div>
+                <div className="container">
+                    <div className="border bg-white py-3 pl-3 pr-3">
+                        <h4>Order ID : {this.props.value.id}</h4>
+                        <h6>Nama Penerima : {this.props.value.nama_penerima} </h6>
+                        <h6>No HP : {this.props.value.no_hp_penerima}</h6>
+                        <h6>Alamat : {this.props.value.alamat_pengiriman}</h6>
+                        <h6>Total Harga : {this.props.value.total_harga}</h6>
+                        <h6>Status : {this.props.value.status}</h6>
                     </div>
                 </div>
-                <div className="col-lg-8 pl-5">
-                    <div className="cart-total-details">
-                        {/* <h4>Total Keranjang</h4>
-                        <ul className="cart-total-card">
-                            <li>Subtotal<span>Rp. {this.props.keranjangData.harga}</span></li>
-                            <li className="total">Total<span>Rp. {this.props.keranjang.total_harga}</span></li>
-                        </ul> */}
-                    </div>
-                </div>
-                {/* </div> */}
             </React.Fragment>
-
         )
     }
 }
-export default  connect('auth, keranjang, keranjangData', actions)(withRouter(RiwayatPesanan));
+export default  connect('', actions)(withRouter(RiwayatPesanan));
 
 
