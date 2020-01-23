@@ -5,6 +5,7 @@ import { withRouter } from "react-router-dom";
 import { connect } from "unistore/react";
 import { actions } from "../store/store";
 import axios from "axios"
+import Swal from "sweetalert2"
 
 class Register extends React.Component {
 
@@ -28,8 +29,15 @@ class Register extends React.Component {
 
         await axios(register)
             .then(function(response){
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Registrasi Berhasil. Silakan Login',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
                 self.props.history.push("/login");
-                alert("Registrasi Berhasil. Silakan Login")
+                // alert("Registrasi Berhasil. Silakan Login")
             })
             .catch(function(error){
                 console.log(error);

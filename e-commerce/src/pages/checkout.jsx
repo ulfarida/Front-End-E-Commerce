@@ -58,7 +58,7 @@ class Checkout extends React.Component {
                 return (
                     <tr>
                         <td>{value.produk.nama_produk}</td>
-                        <td>{value.produk.harga}</td>
+                        <td>{value.harga}</td>
                     </tr>
                 )
             })
@@ -76,12 +76,16 @@ class Checkout extends React.Component {
                                     <h4 className="checkout-title">Informasi Pengiriman</h4>
                                     <div className="row">
                                         <div className="col-md-12">
+                                            <label className='mb-0 pb-0'>Nama Penerima</label>
                                             <input type="text" name="nama" value={this.state.nama} onChange={(e) => this.changeInput(e)}/>
+                                            <label className='mb-0 pb-0'>Nomer Telepon Penerima</label>
                                             <input type="text"  name="telepon" value={this.state.telepon} onChange={(e) => this.changeInput(e)}/>
+                                            <label className='mb-0 pb-0'>Alamat Pengiriman</label>
                                             <input type="text"  name="alamat" value={this.state.alamat} onChange={(e) => this.changeInput(e)}/>
+                                            <label className='mb-0 pb-0'>Email</label>
                                             <input type="email"  name="email" value={this.state.email} onChange={(e) => this.changeInput(e)}/>
+                                            <label className='mb-0 pb-0'>Metode Pembayaran</label>
                                             <select  name="metodePembayaran" value={this.state.metodePembayaran} onChange={(e) => this.changeInput(e)}>
-                                                <option>Metode Pembayaran *</option>
                                                 <option>Transfer Bank</option>
                                                 <option>Virtual Account</option>
                                                 <option>Kartu Kredit/ Debit Online</option>
@@ -89,8 +93,8 @@ class Checkout extends React.Component {
                                                 <option>Alfamart</option>
                                                 <option></option>
                                             </select>
+                                            <label className='mb-0 pb-0'>Jasa Kirim</label>
                                             <select  name="jasaKirim" value={this.state.jasaKirim} onChange={(e) => this.changeInput(e)}>
-                                                <option>Jasa Kirim *</option>
                                                 <option>JNE</option>
                                                 <option>JNT Express</option>
                                                 <option>Grab Express</option>
@@ -137,7 +141,7 @@ class Checkout extends React.Component {
                                             </div>
                                         </div>
                                         <div className="pt-5">
-                                            <Link onClick={()=>this.getCheckout()} className="site-btn btn-full mt-5">Buat Pesanan</Link>
+                                            <Link onClick={()=>this.getCheckout()} className="site-btn btn-full mt-5" style={{color: "black"}}>Buat Pesanan</Link>
                                         </div>
                                     </div>
                                 </div>

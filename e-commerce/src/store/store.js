@@ -29,6 +29,9 @@ const initialState = {
   kategoriProduk: '',
   transaksiList : '',
   lokasi: '',
+  produkId : '',
+  transaksiId : '',
+  search : '',
   auth: false,
   apiUrl: 'http://0.0.0.0:5000/',
   corsHandle: 'https://cors-anywhere.herokuapp.com/'
@@ -43,5 +46,39 @@ export const actions = store => ({
   },
   setChange: (state, key, value) => {
     store.setState({ [key]: value });
-  }
+  },
+  afterLogOut : state => {
+    localStorage.removeItem("token")
+    localStorage.setItem("auth", "false")
+  },
+  doSearch : state => {
+    
+  },
+  
+  changeCategory : async (state, category) =>{
+    store.setState({kategori:category})
+    let produk = {
+        method:"get",
+        url: "http://0.0.0.0:5000/produk",
+        headers: {
+            "Content-Type": "application/json"
+        }
+    };
+
+    await axios(produk)
+        .then(async (response) => {
+          console.warn('respon data', response.data);
+          
+            const produks = response.data.filter(item => {
+                if (item.kategori === category) {
+                    return item;
+                }
+                return false;
+                })
+            await store.setState({ produkList : produks})
+        })
+        .catch((error) => {
+            alert("error");
+        });
+    }
 });

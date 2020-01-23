@@ -9,24 +9,15 @@ import axios from "axios"
 
 class KategoriProduk extends React.Component {
 
-    componentDidMount = async () => { 
-        const self = this
-        const kategori = await self.props.match.params.kategori
-        if(self.props.kategori!==kategori){
-            await self.hitCategory();
-        }
-    }
+    // componentDidMount = async () => { 
+    //     const kategori = await this.props.match.params.kategori
+    //     if(this.props.kategori!==kategori){
+    //         await this.hitCategory();
+    //     }
+    // }
 
-    componentWillUpdate = async () =>{
-        // const self = this
-        const kategori = await this.props.match.params.kategori
-        if(this.props.kategori!==kategori){
-            await this.hitCategory();
-        }
-    }
 
-    hitCategory = async () => {
-        // const self = this
+    componentDidMount = async () => {
         let produk = {
             method:"get",
             url: "http://0.0.0.0:5000/produk",
@@ -36,14 +27,14 @@ class KategoriProduk extends React.Component {
         };
 
         await axios(produk)
-            .then((response) => {
+            .then(async (response) => {
                 const produks = response.data.filter(item => {
                     if (item.kategori === this.props.kategori) {
                         return item;
                     }
                     return false;
                     })
-                store.setState({ produkList : produks})
+                await store.setState({ produkList : produks})
             })
             .catch((error) => {
                 alert("error");
@@ -78,7 +69,7 @@ class KategoriProduk extends React.Component {
                 <div className="container-fluid">
                     <div className="row">
                         <div className="col-md-3">
-                            <Filter />
+                            <Filter/>
                         </div>
                         <div className="col-md-9 mr-0 ml-0">
                             <div className="row search-result mt-5">

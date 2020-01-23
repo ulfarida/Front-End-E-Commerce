@@ -1,38 +1,32 @@
 import React from 'react';
+import profile from '../images/profile.svg'
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from "unistore/react";
 import { actions, store } from "../store/store";
 import transaksi from '../images/transaksi.svg'
+import user from '../images/user.svg'
+import produk from '../images/produk.svg'
 import logout from '../images/logout.svg'
-import profil from '../images/profil.svg'
-import wishlist from '../images/wishlist.svg'
-import password from '../images/password.svg'
 
-const ProfilList = (props) => {
+const AdminList = (props) => {
     return(
         <React.Fragment>
             <div className='border d-flex align-items-center pl-3 bg-warning' style={{height:'50px'}}>
-                <Link to='/profil' style={{color:'black'}}>
-                    <img src={profil} alt="" width='30px' className='mr-3'/>
-                    Profil
-                </Link>
-            </div>
-            <div className='border d-flex align-items-center pl-3 bg-warning' style={{height:'50px'}}>
-                <Link to='/riwayat-pesanan' style={{color:'black'}}>
+                <Link to='/admin/transaksi' style={{color:'black'}}>
                     <img src={transaksi} alt="" width='30px' className='mr-3'/>
-                    Riwayat Pesanan
+                    Riwayat Transaksi
                 </Link>
             </div>
             <div className='border d-flex align-items-center pl-3 bg-warning' style={{height:'50px'}}>
-                <Link to='/wishlist' style={{color:'black'}}>
-                    <img src={wishlist} alt="" width='30px' className='mr-3'/>
-                    Wishlist
+                <Link to='/admin/produk' style={{color:'black'}}>
+                    <img src={produk} alt="" width='30px' className='mr-3'/>
+                    Produk
                 </Link>
             </div>
             <div className='border d-flex align-items-center pl-3 bg-warning' style={{height:'50px'}}>
-                <Link to='/ubahpassword' style={{color:'black'}}>
-                    <img src={password} alt="" width='30px' className='mr-3'/>
-                    Ubah Password
+                <Link to='/admin/user' style={{color:'black'}}>
+                    <img src={user} alt="" width='30px' className='mr-3'/>
+                    User
                 </Link>
             </div>
             <div className='border d-flex align-items-center pl-3 bg-warning' style={{height:'50px'}}>
@@ -46,4 +40,4 @@ const ProfilList = (props) => {
 }
 
 
-export default connect('', actions)(withRouter(ProfilList))
+export default connect('', actions)(withRouter(AdminList))

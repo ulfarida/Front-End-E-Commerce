@@ -4,11 +4,15 @@ import { withRouter, Link } from "react-router-dom";
 import { connect } from "unistore/react";
 import { actions, store } from "../store/store";
 import axios from "axios"
+import deleted from '../images/delete.svg'
 
 class Keranjang extends React.Component {
 
     componentDidMount = async () => {
+        this.getKeranjang()
+    }
 
+    getKeranjang = async () => {
         let keranjang = {
             method:"get",
             url: "http://0.0.0.0:5000/keranjang",
@@ -27,6 +31,53 @@ class Keranjang extends React.Component {
             })
     }
 
+    hapusProduk = async keranjangId => {
+        const self = this
+        let keranjang = {
+            method:"delete",
+            url: "http://0.0.0.0:5000/keranjang/"+(keranjangId)*1,
+            headers: {
+                "Content-Type": "application/json",
+                'Authorization':'Bearer ' + localStorage.getItem("token")
+            }
+        };
+
+        await axios(keranjang)
+            .then((response) => {
+                alert('produk berhasil di hapus dari keranjang')
+            })
+            .catch(function(error) {
+                console.log(error)
+            })
+
+        self.getKeranjang()
+    }
+
+    updateKeranjang = async (keranjangId) => {
+        const self = this
+        // self.props.setInput(e)
+        const input = {
+            "kuantitas" : (self.props.kuantitas)*1
+        }
+        let keranjang = {
+            method:"put",
+            url: "http://0.0.0.0:5000/keranjang/"+(keranjangId)*1,
+            headers: {
+                "Content-Type": "application/json",
+                'Authorization':'Bearer ' + localStorage.getItem("token")
+            },
+            data : input
+        };
+
+        await axios(keranjang)
+            .then((response) => {
+                self.getKeranjang()
+            })
+            .catch(function(error) {
+                console.log(error)
+            })       
+    }
+
 
     render () {
 
@@ -43,14 +94,14 @@ class Keranjang extends React.Component {
                                 <img src={value.produk.foto_produk} alt=""/>
                                 <div className="pc-title">
                                     <h4>{value.produk.nama_produk}</h4>
-                                    <a href="#">Edit Product</a>
+                                    <Link onClick={()=>this.hapusProduk(value.id)}><img src={deleted} alt="" width='20px'/></Link>
                                 </div>
                             </td>
                             <td className="price-col">Rp. {value.produk.harga}</td>
                             <td className="quy-col">
                                 <div className="quy-input">
                                     {value.produk.kuantitas}
-                                    <input type="number" min="01" style={{width:'50px'}} placeholder={value.kuantitas}/>
+                                    <input type="number" min="01" style={{width:'50px'}} value={value.kuantitas} onChange={(e)=>this.props.setInput(e)} name='kuantitas' onClick={() => this.updateKeranjang(value.id)}/>
                                 </div>
                             </td>
                             <td className="total-col">Rp. {value.harga}</td>
@@ -68,7 +119,7 @@ class Keranjang extends React.Component {
                         <div className="cart-table">
                             <table>
                                 <thead>
-                                    <tr>
+                                    <tr style={{backgroundColor:'#fcc200'}}>
                                         <th className="product-th text-center">Produk</th>
                                         <th>Harga</th>
                                         <th>Kuantitas</th>
@@ -85,8 +136,8 @@ class Keranjang extends React.Component {
                             </div>
                             <div className="col-lg-4 col-md-4 text-lg-right text-left">
                             </div>
-                            <div className="col-lg-4 col-md-4 text-lg-center text-center site-btn btn-continue">
-                                <Link onClick={() => this.props.history.push('/checkout')} className="text-center" href="checkout.html">Checkout</Link>
+                            <div className="col-lg-4 col-md-4 text-lg-center text-center site-btn btn-continue" style={{backgroundColor:'#fcc200'}}>
+                                <Link onClick={() => this.props.history.push('/checkout')} className="text-center" href="checkout.html" style={{color: "black"}}>Checkout</Link>
                             </div>
                         </div>
                     </div>
@@ -100,6 +151,6 @@ class Keranjang extends React.Component {
         )
     }
 }
-export default  connect('auth, keranjang, keranjangData', actions)(withRouter(Keranjang));
+export default  connect('auth, keranjang, keranjangData, kuantitas', actions)(withRouter(Keranjang));
 
 

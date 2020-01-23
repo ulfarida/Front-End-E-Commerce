@@ -4,6 +4,7 @@ import { withRouter, Link } from "react-router-dom";
 import { connect } from "unistore/react";
 import { actions, store } from "../store/store";
 import axios from "axios"
+import Swal from "sweetalert2"
 
 class DetailProduk extends React.Component {
 
@@ -37,7 +38,13 @@ class DetailProduk extends React.Component {
 
         await axios(keranjang)
             .then(function(response){
-                alert("produk berhasil ditambahkan ke keranjang");
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Produk berhasil ditambahkan ke keranjang',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
             })
             .catch((error) => {
                 console.log(error);

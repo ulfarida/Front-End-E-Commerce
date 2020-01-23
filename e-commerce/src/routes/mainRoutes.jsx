@@ -17,6 +17,10 @@ import CheckoutSukses from '../pages/checkoutSukses';
 import KategoriProduk from '../pages/kategoriProduk';
 import Riwayat from '../pages/riwayat';
 import TambahProduk from '../pages/tambahProduk';
+import Transaksi from '../pages/transaksi';
+import ProdukAdmin from '../pages/produk';
+import User from '../pages/user';
+import EditProduk from '../pages/editProduk';
 import { Provider } from 'unistore/react';
 import { store } from '../store/store';
 
@@ -39,6 +43,10 @@ const Mainroute = () => {
                     <Route path="/checkout-berhasil" component={CheckoutSukses}/>
                     <Route path="/riwayat-pesanan" component={Riwayat}/>
                     <Route path="/tambah-produk" component={TambahProduk}/>
+                    <Route path="/admin/transaksi" component={Transaksi}/>
+                    <Route path="/admin/produk" component={ProdukAdmin}/>
+                    <Route path="/admin/user" component={User}/>
+                    <Route path="/edit-produk" component={EditProduk}/>
                     <Route path="/produk/:index" component={DetailProduk}/>
                     <Route path="/:kategori" component={KategoriProduk}/>
                 </Switch>

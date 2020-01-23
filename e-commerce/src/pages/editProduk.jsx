@@ -3,13 +3,45 @@ import React from 'react';
 import Header from '../components/header';
 import { withRouter } from "react-router-dom";
 import { connect } from "unistore/react";
-import { actions } from "../store/store";
+import { actions, store } from "../store/store";
 import axios from "axios"
 import '../style/form.css'
 
-class TambahProduk extends React.Component {
+class EditProduk extends React.Component {
 
-    addProduct = async (e) => {
+    componentDidMount = async () => {
+        const self = this
+        console.warn('id produk', self.props.produkId )
+        
+        let produkData = {
+            method:"get",
+            url: "http://0.0.0.0:5000/produk/"+(self.props.produkId)*1,
+            headers: {
+                "Content-Type": "application/json"
+            }
+        };
+
+        await axios(produkData)
+        
+        .then(function(response){
+            console.warn('cari produk details');
+                store.setState({
+                    namaProduk : response.data.nama_produk,
+                    fotoProduk : response.data.foto_produk,
+                    kategori : response.data.kategori,
+                    harga : response.data.harga,
+                    stok : response.data.stok,
+                    deskripsiProduk : response.data.deskripsi,
+                    lokasi : response.data .lokasi,
+                })
+            })
+            .catch(function(error){
+                console.log(error);
+                alert("error");
+            });
+    }
+
+    editProduk = async () => {
         const self = this
         const input = {
             nama_produk : this.props.namaProduk,
@@ -22,8 +54,8 @@ class TambahProduk extends React.Component {
         }
 
         let produkData = {
-            method:"post",
-            url: "http://0.0.0.0:5000/admin/produk",
+            method:"put",
+            url: "http://0.0.0.0:5000/admin/produk/"+(self.props.produkId)*1,
             headers: {
                 "Content-Type": "application/json",
                 'Authorization':'Bearer ' + localStorage.getItem("token")
@@ -33,8 +65,8 @@ class TambahProduk extends React.Component {
 
         await axios(produkData)
             .then(function(response){
-                alert("Produk berhasil ditambahkan")
-                self.props.history.push("/tambah-produk");
+                alert("Produk berhasil diedit")
+                self.props.history.push("/admin/produk");
             })
             .catch(function(error){
                 console.log(error);
@@ -48,7 +80,7 @@ class TambahProduk extends React.Component {
             <React.Fragment>
                 <Header/>
                 <div className="container mt-2">
-                        <h2 className="text-center mb-5">Tambah Produk</h2>
+                        <h2 className="text-center mb-5">Edit Produk</h2>
                     <div className="row">
                         <div className="col-md-2"></div>
                         <div className="col-md-8">
@@ -58,7 +90,7 @@ class TambahProduk extends React.Component {
                                 <label for="fname">Nama Produk</label>
                                 </div>
                                 <div className="col-75">
-                                <input type="text" id="fname" name="namaProduk" onChange= {e => this.props.setInput(e)} required/>
+                                <input type="text" id="fname" name="namaProduk" onChange= {e => this.props.setInput(e)} value={this.props.namaProduk}/>
                                 </div>
                             </div>
                             <div className="row">
@@ -66,7 +98,7 @@ class TambahProduk extends React.Component {
                                 <label for="lname">Link Foto Produk</label>
                                 </div>
                                 <div className="col-75">
-                                <input type="text" id="lname" name="fotoProduk" onChange= {e => this.props.setInput(e)} required />
+                                <input type="text" id="lname" name="fotoProduk" onChange= {e => this.props.setInput(e)} value={this.props.fotoProduk} />
                                 </div>
                             </div>
                             <div className="row">
@@ -74,7 +106,7 @@ class TambahProduk extends React.Component {
                                 <label for="lname">Harga</label>
                                 </div>
                                 <div className="col-75">
-                                <input type="text" id="lname" name="harga" onChange= {e => this.props.setInput(e)} required/>
+                                <input type="text" id="lname" name="harga" onChange= {e => this.props.setInput(e)} value={this.props.harga}/>
                                 </div>
                             </div>
                             <div className="row">
@@ -82,7 +114,7 @@ class TambahProduk extends React.Component {
                                 <label for="lname">Stok</label>
                                 </div>
                                 <div className="col-75">
-                                <input type="text" id="lname" name="stok" onChange= {e => this.props.setInput(e)} required/>
+                                <input type="text" id="lname" name="stok" onChange= {e => this.props.setInput(e)} value={this.props.stok}/>
                                 </div>
                             </div>
                             <div className="row">
@@ -90,7 +122,7 @@ class TambahProduk extends React.Component {
                                 <label for="lname">Lokasi</label>
                                 </div>
                                 <div className="col-75">
-                                <input type="text" id="lname" name="Lokasi" onChange= {e => this.props.setInput(e)} required/>
+                                <input type="text" id="lname" name="Lokasi" onChange= {e => this.props.setInput(e)} value={this.props.lokasi}/>
                                 </div>
                             </div>
                             <div className="row">
@@ -98,7 +130,7 @@ class TambahProduk extends React.Component {
                                 <label for="country">Kategori</label>
                                 </div>
                                 <div className="col-75">
-                                <select id="country" name="kategoriProduk" onChange= {e => this.props.setInput(e)} required>
+                                <select id="country" name="kategoriProduk" onChange= {e => this.props.setInput(e)}>
                                     <option value="">Pilih Kategori *</option>
                                     <option value="Makanan dan Susu">Makanan dan Susu</option>
                                     <option value="Alat Makan">Alat Makan</option>
@@ -114,11 +146,11 @@ class TambahProduk extends React.Component {
                                 <label for="subject">Deskripsi Produk</label>
                                 </div>
                                 <div className="col-75">
-                                <textarea id="subject" name="deskripsiProduk" style={{height:"200px"}}onChange= {e => this.props.setInput(e)} required></textarea>
+                                <textarea id="subject" name="deskripsiProduk" style={{height:"200px"}} onChange= {e => this.props.setInput(e)} value={this.props.deskripsiProduk}></textarea>
                                 </div>
                             </div>
                             <div className="row ">
-                                <input style={{backgroundColor:'#f0134d'}} type="submit" value="Tambah Produk" onClick= {() => this.addProduct()} />
+                                <input style={{backgroundColor:'#f0134d'}} type="submit" value="Edit Produk" onClick= {() => this.editProduk()} />
                             </div>
                             </form>
                         </div>
@@ -130,4 +162,4 @@ class TambahProduk extends React.Component {
         )
     }
     }
-export default connect('namaProduk, kategoriProduk, fotoProduk, harga, stok, lokasi, deskripsiProduk, foto_profil', actions)(withRouter(TambahProduk))
+export default connect('namaProduk, kategoriProduk, fotoProduk, harga, stok, lokasi, deskripsiProduk, foto_profil, produkId', actions)(withRouter(EditProduk))

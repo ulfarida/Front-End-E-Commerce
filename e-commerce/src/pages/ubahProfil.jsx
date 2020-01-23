@@ -5,6 +5,7 @@ import { withRouter, Link } from "react-router-dom";
 import { connect } from "unistore/react";
 import { actions } from "../store/store";
 import axios from "axios"
+import Swal from "sweetalert2"
 
 class UbahProfil extends React.Component {
 
@@ -31,6 +32,13 @@ class UbahProfil extends React.Component {
 
         await axios(profil)
             .then(function(response){
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Ubah Profil Berhasil',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
                 self.props.history.push("/profil");
             })
             .catch(function(error){

@@ -44,12 +44,13 @@ class Profil extends React.Component {
         return (
             <React.Fragment>
                 <Header/>
-                <div className="container">
-                    <div className="row">
-                        <div className="col-md-4 col-lg-4 col-sm-12 col-12">
+                <div className="container-fluid">
+                    <div className="row mt-5 ml-3 mr-3">
+                        <div className="col-md-3 col-lg-3 col-sm-12 col-12">
                             <ProfilList />
                         </div>
-                        <div className="col-md-8 col-lg-8 col-sm-12 col-12">
+                        <div className="col-md-1"></div>
+                        <div className="col-md-7 col-lg-7 col-sm-12 col-12">
                             <ProfilInfo />
                         </div>
                     </div>
