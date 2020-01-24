@@ -3,7 +3,8 @@ import Header from '../components/header';
 import { withRouter, Link } from "react-router-dom";
 import { connect } from "unistore/react";
 import { actions } from "../store/store";
-import axios from 'axios'
+import axios from 'axios';
+import Swal from "sweetalert2";
 
 class Checkout extends React.Component {
 
@@ -31,7 +32,7 @@ class Checkout extends React.Component {
 
         let checkout = {
             method:"post",
-            url: "http://0.0.0.0:5000/checkout",
+            url: "https://babybun.my.id/checkout",
             headers: {
                 "Content-Type": "application/json",
                 'Authorization':'Bearer ' + localStorage.getItem("token")
@@ -44,7 +45,11 @@ class Checkout extends React.Component {
                 this.props.history.push('/checkout-berhasil')
             })
             .catch(function(error) {
-                alert("error")
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong!'
+                })
                 console.log(error)
             })
     }
@@ -63,7 +68,6 @@ class Checkout extends React.Component {
                 )
             })
         }
-
     
         return (
             <React.Fragment>
@@ -154,6 +158,7 @@ class Checkout extends React.Component {
         )
     }
 }
+
 export default  connect('nama, alamat, telepon, email, metodePembayaran, jasaKirim, keranjangData, keranjang', actions)(withRouter(Checkout));
 
 

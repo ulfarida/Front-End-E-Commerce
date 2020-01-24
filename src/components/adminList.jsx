@@ -1,8 +1,7 @@
 import React from 'react';
-import profile from '../images/profile.svg'
 import { Link, withRouter } from 'react-router-dom';
 import { connect } from "unistore/react";
-import { actions, store } from "../store/store";
+import { actions } from "../store/store";
 import transaksi from '../images/transaksi.svg'
 import user from '../images/user.svg'
 import produk from '../images/produk.svg'

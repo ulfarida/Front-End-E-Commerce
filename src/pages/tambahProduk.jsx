@@ -6,6 +6,7 @@ import { connect } from "unistore/react";
 import { actions } from "../store/store";
 import axios from "axios"
 import '../style/form.css'
+import Swal from 'sweetalert2';
 
 class TambahProduk extends React.Component {
 
@@ -23,7 +24,7 @@ class TambahProduk extends React.Component {
 
         let produkData = {
             method:"post",
-            url: "http://0.0.0.0:5000/admin/produk",
+            url: "https://babybun.my.id/admin/produk",
             headers: {
                 "Content-Type": "application/json",
                 'Authorization':'Bearer ' + localStorage.getItem("token")
@@ -33,12 +34,22 @@ class TambahProduk extends React.Component {
 
         await axios(produkData)
             .then(function(response){
-                alert("Produk berhasil ditambahkan")
+                Swal.fire({
+					position: 'center',
+					icon: 'success',
+					title: 'Produk berhasil ditambahkan',
+					showConfirmButton: false,
+					timer: 1500
+				});
                 self.props.history.push("/tambah-produk");
             })
             .catch(function(error){
                 console.log(error);
-                alert("error");
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong!'
+                })
             });
     }
 

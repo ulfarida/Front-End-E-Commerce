@@ -28,7 +28,7 @@ class DetailProduk extends React.Component {
         }
         let keranjang = {
             method:"post",
-            url: "http://0.0.0.0:5000/keranjang",
+            url: "https://babybun.my.id/keranjang",
             headers: {
                 "Content-Type": "application/json",
                 'Authorization':'Bearer ' + localStorage.getItem("token")
@@ -48,7 +48,46 @@ class DetailProduk extends React.Component {
             })
             .catch((error) => {
                 console.log(error);
-                alert("error");
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong!'
+                })
+            });
+    }
+
+    addWishlist = async () => {
+        const self = this
+        const input = {
+            produk_id : self.props.produkData.id
+        }
+        let wishlist = {
+            method:"post",
+            url: "https://babybun.my.id/wishlist",
+            headers: {
+                "Content-Type": "application/json",
+                'Authorization':'Bearer ' + localStorage.getItem("token")
+            },
+            data : input
+        };
+
+        await axios(wishlist)
+            .then(function(response){
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Berhasil menambahkan ke wishlist',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            })
+            .catch((error) => {
+                console.log(error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong!'
+                })
             });
     }
 
@@ -71,8 +110,8 @@ class DetailProduk extends React.Component {
                                     <div className="pc-meta">
                                     <h4 className="price">Rp. {this.props.produkData.harga}</h4>
                                     </div>
-                                    <p>{this.props.produkData.deskripsi}</p>
-                                    <div>
+                                    <p>Jumlah terjual :{this.props.produkData.jumlah_terjual}</p>
+                                    <div className='mb-5'>
                                         <span>Stock :</span>
                                         <span>{this.props.produkData.stok}</span>
                                     </div>
@@ -81,6 +120,7 @@ class DetailProduk extends React.Component {
                                         <input type="number" min="1" max={this.props.produkData.stok} name="kuantitas" step="1" onChange= {e => this.props.setInput(e)}/>
                                     </div>
                                     <Link onClick={() => this.addKeranjang()} className="site-btn btn-full border bg-white py-3 pr-3 pl-3">Tambah ke keranjang</Link>
+                                    <Link onClick={() => this.addWishlist()} className="site-btn btn-full border bg-white py-3 pr-3 pl-3 ml-4">Wishlist</Link>
                                 </div>
                             </div>
                         </div>

@@ -5,7 +5,6 @@ import { Link, withRouter } from "react-router-dom";
 import { connect } from "unistore/react";
 import { actions, store } from "../store/store";
 import axios from "axios"
-import edit from '../images/edit.svg'
 
 
 class Transaksi extends React.Component {
@@ -22,7 +21,7 @@ class Transaksi extends React.Component {
     getTransaksi =async  () => {
         let transaksi = {
             method:"get",
-            url: "http://0.0.0.0:5000/admin/transaksi",
+            url: "https://babybun.my.id/admin/transaksi",
             headers: {
                 "Content-Type": "application/json",
                 'Authorization':'Bearer ' + localStorage.getItem("token")
@@ -48,7 +47,7 @@ class Transaksi extends React.Component {
         }
         const transaksi = {
             method:"put",
-            url: "http://0.0.0.0:5000/admin/transaksi/"+ self.state.transaksiId,
+            url: "https://babybun.my.id/admin/transaksi/"+ self.state.transaksiId,
             headers: {
                 "Content-Type": "application/json",
                 'Authorization':'Bearer ' + localStorage.getItem("token")

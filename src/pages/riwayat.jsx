@@ -15,7 +15,7 @@ class Riwayat extends React.Component {
     componentDidMount = async () => {
         let transaksi = {
             method:"get",
-            url: "http://0.0.0.0:5000/transaksi",
+            url: "https://babybun.my.id/transaksi",
             headers: {
                 "Content-Type": "application/json",
                 'Authorization':'Bearer ' + localStorage.getItem("token")

@@ -3,10 +3,10 @@ import Header from '../components/header';
 import AdminList from '../components/adminList';
 import { Link, withRouter } from "react-router-dom";
 import { connect } from "unistore/react";
-import { actions, store } from "../store/store";
+import { actions } from "../store/store";
 import axios from "axios"
-import edit from '../images/edit.svg'
 import deleted from '../images/delete.svg'
+import Swal from "sweetalert2"
 
 
 class User extends React.Component {
@@ -22,7 +22,7 @@ class User extends React.Component {
     getUserList = async () => {
         let user = {
             method:"get",
-            url: "http://0.0.0.0:5000/admin/user",
+            url: "https://babybun.my.id/admin/user",
             headers: {
                 "Content-Type": "application/json",
                 'Authorization':'Bearer ' + localStorage.getItem("token")
@@ -35,13 +35,18 @@ class User extends React.Component {
             })
             .catch(function(error) {
                 console.log(error)
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong!'
+                })
             })
     }
 
     deleteUser = async id => {      
         let userData = {
             method:"delete",
-            url: "http://0.0.0.0:5000/admin/user/"+id,
+            url: "https://babybun.my.id/admin/user/"+id,
             headers: {
                 "Content-Type": "application/json",
                 'Authorization':'Bearer ' + localStorage.getItem("token")
@@ -50,10 +55,21 @@ class User extends React.Component {
 
         await axios(userData)
             .then((response) => {
-                alert('user berhasil dihapus')
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'User berhasil dihapus',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
             })
             .catch(function(error) {
                 console.log(error)
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong!'
+                })
             })
 
         this.getUserList()
