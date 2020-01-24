@@ -5,7 +5,6 @@ import { Link, withRouter } from "react-router-dom";
 import { connect } from "unistore/react";
 import { actions, store } from "../store/store";
 import axios from "axios"
-import edit from '../images/edit.svg'
 
 
 class Transaksi extends React.Component {

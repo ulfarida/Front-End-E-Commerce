@@ -4,7 +4,8 @@ import Header from '../components/header';
 import { withRouter, Link } from "react-router-dom";
 import { connect } from "unistore/react";
 import { actions, store } from "../store/store";
-import axios from "axios"
+import axios from "axios";
+import Swal from "sweetalert2";
 
 class Login extends React.Component {
 
@@ -35,7 +36,12 @@ class Login extends React.Component {
                 }
             })
             .catch(function(error) {
-                console.log(error)
+                console.log(error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong!'
+                })
             })
     }
 

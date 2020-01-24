@@ -6,6 +6,7 @@ import { connect } from "unistore/react";
 import { actions, store } from "../store/store";
 import axios from "axios"
 import '../style/form.css'
+import Swal from "sweetalert2"
 
 class EditProduk extends React.Component {
 
@@ -37,7 +38,11 @@ class EditProduk extends React.Component {
             })
             .catch(function(error){
                 console.log(error);
-                alert("error");
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong!'
+                })
             });
     }
 
@@ -65,12 +70,22 @@ class EditProduk extends React.Component {
 
         await axios(produkData)
             .then(function(response){
-                alert("Produk berhasil diedit")
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Produk berhasil diedit',
+                    showConfirmButton: false,
+                    timer: 1500
+                  })
                 self.props.history.push("/admin/produk");
             })
             .catch(function(error){
                 console.log(error);
-                alert("error");
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong!'
+                })
             });
     }
 

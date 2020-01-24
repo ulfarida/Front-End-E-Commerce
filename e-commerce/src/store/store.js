@@ -1,5 +1,6 @@
 import createStore from 'unistore';
 import axios from 'axios';
+import Swal from "sweetalert2"
 
 const initialState = {
   nama: '',
@@ -32,6 +33,8 @@ const initialState = {
   produkId : '',
   transaksiId : '',
   search : '',
+  wishlist : {},
+  wishlistData : [],
   auth: false,
   apiUrl: 'http://0.0.0.0:5000/',
   corsHandle: 'https://cors-anywhere.herokuapp.com/'
@@ -40,9 +43,8 @@ const initialState = {
 export const store = createStore(initialState);
 
 export const actions = store => ({
-  setInput: (state, event) => {
-    console.log(event.target.name, event.target.value);
-    store.setState({ [event.target.name]: event.target.value });
+  setInput: async (state, event) => {
+    await store.setState({ [event.target.name]: event.target.value });
   },
   setChange: (state, key, value) => {
     store.setState({ [key]: value });
@@ -51,10 +53,34 @@ export const actions = store => ({
     localStorage.removeItem("token")
     localStorage.setItem("auth", "false")
   },
-  doSearch : state => {
-    
+  doSearch : async state => {
+    let produk = {
+      method:"get",
+      url: "http://0.0.0.0:5000/produk",
+      headers: {
+          "Content-Type": "application/json"
+      }
+    };
+
+    await axios(produk)
+        .then(async (response) => {
+          console.warn('respon data', response.data);
+          
+          const produks = response.data.filter(item =>
+              item.nama_produk.toLowerCase().indexOf(state.search) > -1 
+              )
+            
+          await store.setState({ produkList : produks})
+        })
+        .catch((error) => {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Something went wrong!'
+        })
+        });
   },
-  
+
   changeCategory : async (state, category) =>{
     store.setState({kategori:category})
     let produk = {
@@ -67,8 +93,6 @@ export const actions = store => ({
 
     await axios(produk)
         .then(async (response) => {
-          console.warn('respon data', response.data);
-          
             const produks = response.data.filter(item => {
                 if (item.kategori === category) {
                     return item;
@@ -78,7 +102,11 @@ export const actions = store => ({
             await store.setState({ produkList : produks})
         })
         .catch((error) => {
-            alert("error");
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Something went wrong!'
+        })
         });
     }
 });

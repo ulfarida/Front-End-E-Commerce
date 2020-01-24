@@ -4,7 +4,7 @@ import background2 from '../images/background2.jpg'
 import background3 from '../images/background3.jpg'
 import backgroundrec2 from '../images/background-rec.jpg'
 import backgroundrec from '../images/background-rec2.jpg'
-import { Link, withRouter } from 'react-router-dom';
+import { withRouter } from 'react-router-dom';
 
 const Promo = () => {
     return(

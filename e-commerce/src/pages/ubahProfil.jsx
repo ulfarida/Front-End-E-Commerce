@@ -1,7 +1,7 @@
 
 import React from 'react'; 
 import Header from '../components/header';
-import { withRouter, Link } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import { connect } from "unistore/react";
 import { actions } from "../store/store";
 import axios from "axios"
@@ -43,7 +43,11 @@ class UbahProfil extends React.Component {
             })
             .catch(function(error){
                 console.log(error);
-                alert("error");
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong!'
+                })
             });
     }
 

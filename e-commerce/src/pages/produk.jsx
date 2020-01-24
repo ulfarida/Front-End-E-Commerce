@@ -7,6 +7,7 @@ import { actions, store } from "../store/store";
 import axios from "axios"
 import edit from '../images/edit.svg'
 import deleted from '../images/delete.svg'
+import Swal from "sweetalert2";
 
 
 class ProdukAdmin extends React.Component {
@@ -33,7 +34,11 @@ class ProdukAdmin extends React.Component {
                 this.setState({produkList : response.data})
             })
             .catch(function(error) {
-                console.log(error)
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong!'
+                })
             })
     }
 
@@ -49,10 +54,20 @@ class ProdukAdmin extends React.Component {
 
         await axios(produkData)
             .then((response) => {
-                alert('produk berhasil dihapus')
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Produk berhasil dihapus',
+                    showConfirmButton: false,
+                    timer: 1500
+                  })
             })
             .catch(function(error) {
-                console.log(error)
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong!'
+                })
             })
 
         this.getProdukList()

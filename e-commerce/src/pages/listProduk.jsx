@@ -5,7 +5,8 @@ import Produk from '../components/produk';
 import { withRouter  } from "react-router-dom";
 import { connect } from "unistore/react";
 import { actions, store } from "../store/store";
-import axios from "axios"
+import axios from "axios";
+import Swal from "sweetalert2";
 
 class ListProduk extends React.Component {
 
@@ -25,7 +26,11 @@ class ListProduk extends React.Component {
             })
             .catch((error) => {
                 console.log(error);
-                alert("error");
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong!'
+                })
             });
         console.warn('axios', result);
         

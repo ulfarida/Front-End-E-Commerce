@@ -4,7 +4,8 @@ import { withRouter, Link } from "react-router-dom";
 import { connect } from "unistore/react";
 import { actions, store } from "../store/store";
 import axios from "axios"
-import deleted from '../images/delete.svg'
+import deleted from '../images/delete.svg';
+import Swal from "sweetalert2";
 
 class Keranjang extends React.Component {
 
@@ -44,7 +45,13 @@ class Keranjang extends React.Component {
 
         await axios(keranjang)
             .then((response) => {
-                alert('produk berhasil di hapus dari keranjang')
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Produk berhasil di hapus dari keranjang',
+                    showConfirmButton: false,
+                    timer: 1500
+                  })
             })
             .catch(function(error) {
                 console.log(error)

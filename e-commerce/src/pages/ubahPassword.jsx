@@ -5,6 +5,7 @@ import { withRouter } from "react-router-dom";
 import { connect } from "unistore/react";
 import { actions } from "../store/store";
 import axios from "axios"
+import Swal from 'sweetalert2';
 
 class UbahPassword extends React.Component {
 
@@ -29,11 +30,21 @@ class UbahPassword extends React.Component {
         await axios(ubahPassword)
             .then(function(response){
                 self.props.history.push("/login");
-                alert(response.data.message)
+                Swal.fire({
+					position: 'center',
+					icon: 'success',
+					title: response.data.message,
+					showConfirmButton: false,
+					timer: 1500
+				});
             })
             .catch(function(error){
                 console.log(error);
-                alert(error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong!'
+                })
             });
     }
 

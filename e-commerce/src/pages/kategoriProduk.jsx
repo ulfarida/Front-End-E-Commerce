@@ -6,16 +6,9 @@ import { withRouter } from "react-router-dom";
 import { connect } from "unistore/react";
 import { actions, store } from "../store/store";
 import axios from "axios"
+import Swal from "sweetalert2"
 
 class KategoriProduk extends React.Component {
-
-    // componentDidMount = async () => { 
-    //     const kategori = await this.props.match.params.kategori
-    //     if(this.props.kategori!==kategori){
-    //         await this.hitCategory();
-    //     }
-    // }
-
 
     componentDidMount = async () => {
         let produk = {
@@ -37,7 +30,11 @@ class KategoriProduk extends React.Component {
                 await store.setState({ produkList : produks})
             })
             .catch((error) => {
-                alert("error");
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong!'
+                })
             });
     }
 
