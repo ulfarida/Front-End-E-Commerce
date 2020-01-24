@@ -14,4 +14,4 @@ sed -i -e 's|AWS_STAGING_ACCESS_KEY|'"${AWS_STAGING_ACCESS_KEY}"'|g' ~/.aws/cred
 sed -i -e 's|AWS_STAGING_SECRET_KEY|'"${AWS_STAGING_SECRET_KEY}"'|g' ~/.aws/credentials
 
 # update apps deployment
-kubectl -n alta7--kubeconfig kube/kubeconfig set image deployment/${APP_K8S_DEPLOYMENT_NAME} ${APP_K8S_CONTAINER_NAME}=ulfarida/portofolio:fe-${TRAVIS_BUILD_NUMBER}
+kubectl -n alta7 --kubeconfig kubeconfig set image deployment/${APP_K8S_DEPLOYMENT_NAME} ${APP_K8S_CONTAINER_NAME}=ulfarida/portofolio:fe-${TRAVIS_BUILD_NUMBER}
