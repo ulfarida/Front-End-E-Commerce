@@ -7,6 +7,7 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 
 class Register extends React.Component {
+	
 	afterRegister = async (e) => {
 		const self = this;
 		const input = {
