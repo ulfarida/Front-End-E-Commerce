@@ -4,7 +4,8 @@ import { withRouter, Link } from "react-router-dom";
 import { connect } from "unistore/react";
 import { actions, store } from "../store/store";
 import axios from "axios"
-import deleted from '../images/delete.svg'
+import deleted from '../images/delete.svg';
+import Swal from "sweetalert2";
 
 class Keranjang extends React.Component {
 
@@ -15,7 +16,7 @@ class Keranjang extends React.Component {
     getKeranjang = async () => {
         let keranjang = {
             method:"get",
-            url: "http://0.0.0.0:5000/keranjang",
+            url: "https://babybun.my.id/keranjang",
             headers: {
                 "Content-Type": "application/json",
                 'Authorization':'Bearer ' + localStorage.getItem("token")
@@ -35,7 +36,7 @@ class Keranjang extends React.Component {
         const self = this
         let keranjang = {
             method:"delete",
-            url: "http://0.0.0.0:5000/keranjang/"+(keranjangId)*1,
+            url: "https://babybun.my.id/keranjang/"+(keranjangId)*1,
             headers: {
                 "Content-Type": "application/json",
                 'Authorization':'Bearer ' + localStorage.getItem("token")
@@ -44,7 +45,13 @@ class Keranjang extends React.Component {
 
         await axios(keranjang)
             .then((response) => {
-                alert('produk berhasil di hapus dari keranjang')
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Produk berhasil di hapus dari keranjang',
+                    showConfirmButton: false,
+                    timer: 1500
+                  })
             })
             .catch(function(error) {
                 console.log(error)
@@ -61,7 +68,7 @@ class Keranjang extends React.Component {
         }
         let keranjang = {
             method:"put",
-            url: "http://0.0.0.0:5000/keranjang/"+(keranjangId)*1,
+            url: "https://babybun.my.id/keranjang/"+(keranjangId)*1,
             headers: {
                 "Content-Type": "application/json",
                 'Authorization':'Bearer ' + localStorage.getItem("token")

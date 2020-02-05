@@ -5,43 +5,46 @@ import { withRouter } from "react-router-dom";
 import { connect } from "unistore/react";
 import { actions } from "../store/store";
 import axios from "axios"
-import Swal from "sweetalert2"
+import Swal from 'sweetalert2';
 
-class Register extends React.Component {
+class UbahPassword extends React.Component {
 
-    afterRegister = async (e) => {
+    changePassword = async (e) => {
         const self = this
         const input = {
-            username : this.props.username,
-            email : this.props.email,
-            password : this.props.password,
-            confirm_password : this.props.confirm_password
+            password_lama : this.props.password_lama,
+            password_baru : this.props.password_baru,
+            konfirmasi_password : this.props.confirm_password,
         }
 
-        let register = {
-            method:"post",
-            url: "http://0.0.0.0:5000/register",
+        let ubahPassword = {
+            method:"put",
+            url: "https://babybun.my.id/password",
             headers: {
+                'Authorization':'Bearer ' + localStorage.getItem("token"),
                 "Content-Type": "application/json"
             },
             data : input
         };
 
-        await axios(register)
+        await axios(ubahPassword)
             .then(function(response){
-                Swal.fire({
-                    position: 'center',
-                    icon: 'success',
-                    title: 'Registrasi Berhasil. Silakan Login',
-                    showConfirmButton: false,
-                    timer: 1500
-                })
                 self.props.history.push("/login");
-                // alert("Registrasi Berhasil. Silakan Login")
+                Swal.fire({
+					position: 'center',
+					icon: 'success',
+					title: response.data.message,
+					showConfirmButton: false,
+					timer: 1500
+				});
             })
             .catch(function(error){
                 console.log(error);
-                alert("error");
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong!'
+                })
             });
     }
 
@@ -56,7 +59,7 @@ class Register extends React.Component {
                             <div className="d-flex justify-content-center h-100 mt-5">
                                 <div className="card">
                                     <div className="card-header">
-                                        <h3>Register</h3>
+                                        <h3>Ubah Password</h3>
                                     </div>
                                     <div className="card-body" onSubmit={e => e.preventDefault()}>
                                         <form>
@@ -64,28 +67,22 @@ class Register extends React.Component {
                                                 <div className="input-group-prepend">
                                                     <span className="input-group-text"><i className="fas fa-user"></i></span>
                                                 </div>
-                                                <input type="text" className="form-control" placeholder="username" id="username"  name="username" onChange= {e => this.props.setInput(e)} required/>
+                                                <input type="password" className="form-control" placeholder="password lama" id="password_lama"  name="password_lama" onChange= {e => this.props.setInput(e)} required/>
                                                 
                                             </div>
                                             <div className="input-group form-group">
                                                 <div className="input-group-prepend">
                                                     <span className="input-group-text"><i className="fas fa-key"></i></span>
                                                 </div>
-                                                <input type="email" className="form-control" placeholder="email" id="email"  name="email" onChange= {e => this.props.setInput(e)} required/>
+                                                <input type="password" className="form-control" placeholder="password baru" id="password_baru"  name="password_baru" onChange= {e => this.props.setInput(e)} required/>
                                             </div>
                                             <div className="input-group form-group">
                                                 <div className="input-group-prepend">
                                                     <span className="input-group-text"><i className="fas fa-key"></i></span>
                                                 </div>
-                                                <input type="password" className="form-control" placeholder="password" id="password"  name="password" onChange= {e => this.props.setInput(e)} required/>
+                                                <input type="password" className="form-control" placeholder="konfirmasi password" id="konfirmasi_password"  name="confirm_password" onChange= {e => this.props.setInput(e)} required/>
                                             </div>
-                                            <div className="input-group form-group">
-                                                <div className="input-group-prepend">
-                                                    <span className="input-group-text"><i className="fas fa-key"></i></span>
-                                                </div>
-                                                <input type="password" className="form-control" placeholder="konfirmasi password" id="confirm_password"  name="confirm_password" onChange= {e => this.props.setInput(e)} required/>
-                                            </div>
-                                                <button type="submit" value="Login" className="btn float-right login_btn" onClick={()=> this.afterRegister()}>Register
+                                                <button type="submit" value="Login" className="btn float-right login_btn" onClick={()=> this.changePassword()} style={{width:'150px', marginTop:'30px'}}>Ubah Password
                                                 </button>
                                         </form>
                                     </div>
@@ -98,4 +95,4 @@ class Register extends React.Component {
         )
     }
 }
-export default connect('username, email, password, confirm_password, apiUrl, auth', actions)(withRouter(Register))
+export default connect('password_lama, password_baru, confirm_password', actions)(withRouter(UbahPassword))

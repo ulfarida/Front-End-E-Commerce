@@ -5,37 +5,52 @@ import { withRouter } from "react-router-dom";
 import { connect } from "unistore/react";
 import { actions } from "../store/store";
 import axios from "axios"
+import Swal from "sweetalert2"
 
-class UbahPassword extends React.Component {
+class UbahProfil extends React.Component {
 
-    changePassword = async (e) => {
+    changeProfil = async (e) => {
+        console.warn("ready to axios")
         const self = this
         const input = {
-            password_lama : this.props.password_lama,
-            password_baru : this.props.password_baru,
-            konfirmasi_password : this.props.confirm_password,
+            nama : this.props.nama,
+            alamat : this.props.alamat,
+            no_hp : this.props.telepon,
+            tangal_lahir : this.props.tangalLahir,
+            foto_profil : this.props.fotoProfil
         }
 
-        let ubahPassword = {
+        let profil = {
             method:"put",
-            url: "http://0.0.0.0:5000/password",
+            url: "https://babybun.my.id/profil",
             headers: {
+                "Content-Type": "application/json",
                 'Authorization':'Bearer ' + localStorage.getItem("token"),
-                "Content-Type": "application/json"
             },
             data : input
         };
 
-        await axios(ubahPassword)
+        await axios(profil)
             .then(function(response){
-                self.props.history.push("/login");
-                alert(response.data.message)
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Ubah Profil Berhasil',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+                self.props.history.push("/profil");
             })
             .catch(function(error){
                 console.log(error);
-                alert(error);
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Something went wrong!'
+                })
             });
     }
+
 
     render () {
         return (
@@ -48,7 +63,7 @@ class UbahPassword extends React.Component {
                             <div className="d-flex justify-content-center h-100 mt-5">
                                 <div className="card">
                                     <div className="card-header">
-                                        <h3>Ubah Password</h3>
+                                        <h3>Ubah Profil</h3>
                                     </div>
                                     <div className="card-body" onSubmit={e => e.preventDefault()}>
                                         <form>
@@ -56,22 +71,28 @@ class UbahPassword extends React.Component {
                                                 <div className="input-group-prepend">
                                                     <span className="input-group-text"><i className="fas fa-user"></i></span>
                                                 </div>
-                                                <input type="password" className="form-control" placeholder="password lama" id="password_lama"  name="password_lama" onChange= {e => this.props.setInput(e)} required/>
+                                                <input type="text" className="form-control" placeholder="nama" id="nama"  name="nama" onChange= {e => this.props.setInput(e)}/>
                                                 
                                             </div>
                                             <div className="input-group form-group">
                                                 <div className="input-group-prepend">
                                                     <span className="input-group-text"><i className="fas fa-key"></i></span>
                                                 </div>
-                                                <input type="password" className="form-control" placeholder="password baru" id="password_baru"  name="password_baru" onChange= {e => this.props.setInput(e)} required/>
+                                                <input type="text" className="form-control" placeholder="alamat" id="alamat"  name="alamat" onChange= {e => this.props.setInput(e)}/>
                                             </div>
                                             <div className="input-group form-group">
                                                 <div className="input-group-prepend">
                                                     <span className="input-group-text"><i className="fas fa-key"></i></span>
                                                 </div>
-                                                <input type="password" className="form-control" placeholder="konfirmasi password" id="konfirmasi_password"  name="confirm_password" onChange= {e => this.props.setInput(e)} required/>
+                                                <input type="text" className="form-control" placeholder="telepon" id="telepon"  name="telepon" onChange= {e => this.props.setInput(e)}/>
                                             </div>
-                                                <button type="submit" value="Login" className="btn float-right login_btn" onClick={()=> this.changePassword()} style={{width:'150px', marginTop:'30px'}}>Ubah Password
+                                            <div className="input-group form-group">
+                                                <div className="input-group-prepend">
+                                                    <span className="input-group-text"><i className="fas fa-key"></i></span>
+                                                </div>
+                                                <input type="text" className="form-control" placeholder="tanggal lahir" id="tanggal_lahir"  name="tanggalLahir" onChange= {e => this.props.setInput(e)}/>
+                                            </div>
+                                                <button type="submit" value="Login" className="btn float-right login_btn" onClick={()=> this.changeProfil()}>Ubah Profil
                                                 </button>
                                         </form>
                                     </div>
@@ -84,4 +105,4 @@ class UbahPassword extends React.Component {
         )
     }
 }
-export default connect('password_lama, password_baru, confirm_password', actions)(withRouter(UbahPassword))
+export default connect('nama, alamat, telepon, tanggalLahir, fotoProfil', actions)(withRouter(UbahProfil))

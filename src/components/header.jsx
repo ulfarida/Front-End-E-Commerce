@@ -4,7 +4,7 @@ import search from '../images/search.png'
 import cart from '../images/cart.svg'
 import profile from '../images/profile.svg'
 import { connect } from "unistore/react";
-import { actions, store } from "../store/store";
+import { actions } from "../store/store";
 import { Link, withRouter } from 'react-router-dom';
 import admin from '../images/admin.svg'
 
@@ -36,9 +36,9 @@ const Header = (props) => {
                                 <Link to='/popok' onClick={() => props.changeCategory('Popok')}className="dropdown-item">Popok</Link>
                             </div>
                         </div>
-                        <form className="form-inline">
+                        <form className="form-inline" onSubmit={e => e.preventDefault()}>
                             <div className="input-group">                    
-                                <input type="text" className="form-control" placeholder="Search" onChange={(e)=>this.props.setInput(e)} name='search'/>
+                                <input type="text" className="form-control" placeholder="cari produk" onChange={(e)=>props.setInput(e)} name='search'/>
                                 <div className="input-group-append search-button">
                                     <Link to='/search' type="button" className="btn btn-warning"><img src={search} style={{height:'20px'}} alt="" onClick={()=>props.doSearch()}/></Link>
                                 </div>
