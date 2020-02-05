@@ -8,6 +8,7 @@ import Swal from "sweetalert2"
 
 class DetailProduk extends React.Component {
 
+    #trigger deploy
     componentDidMount = async () => {
         const self = this
         const index = await self.props.match.params.index;
