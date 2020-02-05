@@ -26,7 +26,7 @@ const Header = (props) => {
                     </div>
                     <div className="navbar-nav">
                         <div className="nav-item dropdown">
-                            <Link className="nav-link dropdown-toggle" data-toggle="dropdown" style={{color:'white', fontSize:'20px'}}>Kategori</Link>
+                            <Link className="nav-link dropdown-toggle" data-toggle="dropdown" style={{color:'white', fontSize:'20px'}}>Category</Link>
                             <div className="dropdown-menu">
                                 <Link to='/makanan-susu' onClick={() => props.changeCategory('Makanan dan Susu')} className="dropdown-item">Makanan dan Susu</Link>
                                 <Link to='/alat-makan' onClick={() => props.changeCategory('Alat Makan')} className="dropdown-item">Alat makan</Link>
